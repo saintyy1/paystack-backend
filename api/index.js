@@ -12,9 +12,14 @@ module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
   }
 
+   // Always handle preflight first
   if (req.method === "OPTIONS") {
-    res.status(204).end()
-    return
+    if (origin) res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.writeHead(204);
+    res.end();
+    return;
   }
 
   const route = new URL(req.url, `http://${req.headers.host}`).searchParams.get("route")
