@@ -2,9 +2,12 @@ const { db } = require("../firebase")
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY
 
 module.exports = async (req, res) => {
-  const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(",")
-  : [];
+  const allowedOrigins = [
+    process.env.ALLOWED_ORIGIN_1,
+    process.env.ALLOWED_ORIGIN_2,
+    process.env.ALLOWED_ORIGIN_3,
+  ].filter(Boolean); // remove empty ones
+  
   const origin = req.headers.origin
 
   // Set CORS headers
