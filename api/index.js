@@ -112,6 +112,7 @@ module.exports = async (req, res) => {
           promotionStartDate: admin.firestore.FieldValue.serverTimestamp(),
           promotionPlan: planId,
           promotionEndDate: new Date(Date.now() + (planId === "1-month" ? 30 : 60) * 24 * 60 * 60 * 1000),
+          promotionEndNotificationSent: false
         })
 
         await db.collection("payments").add({
